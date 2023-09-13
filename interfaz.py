@@ -196,12 +196,18 @@ def ventana5():
     ordenar_ascendente_button = Button(ventana5, text="Ascendente", font="Trispace 14 bold ", fg="snow", bg="SkyBlue4", width=20, command=lambda: ordenar_tabla(True))
     ordenar_ascendente_button.pack()
 
-    ordenar_descendente_button = Button(ventana5, text="Descendente", font="Trispace 14 bold ", fg="snow", bg="SkyBlue4", width=20, command=lambda: ordenar_tabla(False))
+    ordenar_descendente_button = Button(ventana5, text="Descendente", font="Trispace 14 bold ", fg="snow", bg="SkyBlue4", width=20, command=lambda: ordenar_tabla_2(False))
     ordenar_descendente_button.pack()
+    limpiar = Button(ventana5, text="Limpiar", font="Trispace 14 bold ", fg="snow", bg="SkyBlue4", width=20, command = lambda : limpiar())
+    limpiar.pack()
 
     
 
     def ordenar_tabla(ascendente):
+        ordenar_descendente_button.config(state=DISABLED)
+        ordenar_ascendente_button.config(state=DISABLED)
+        
+        
         global orden_ascendente
         fecha_inicial = fecha_inicial_entry.get()
         fecha_final = fecha_final_entry.get()
@@ -224,13 +230,56 @@ def ventana5():
         sorted_data = mergesort(reservaciones_filtradas, ascendente)
 
         # Si el orden actual es descendente, cambiar a ascendente y viceversa
-        if ascendente!= orden_ascendente:
-            orden_ascendente = ascendente
+        # if ascendente!= orden_ascendente:
+        #     orden_ascendente = ascendente
 
         # Actualizar el Treeview con los datos ordenados
         actualizar_treeview(ventana5, sorted_data)
 
-    ordenar_tabla(True)
+    # ordenar_tabla(True)
+
+
+
+    def ordenar_tabla_2(ascendente):
+        ordenar_ascendente_button.config(state=DISABLED)
+        
+        ordenar_descendente_button.config(state=DISABLED)
+        
+        global orden_ascendente
+        fecha_inicial = fecha_inicial_entry.get()
+        fecha_final = fecha_final_entry.get()
+
+        if fecha_inicial and fecha_final:
+            fecha_inicial, fecha_final = validar_fechas(fecha_inicial, fecha_final)
+            if fecha_inicial is None or fecha_final is None:
+                messagebox.showerror("Error", "Fechas ingresadas no válidas")
+                return
+
+        # Filtrar y ordenar las reservaciones según el orden especificado
+        def filtro_rango_fechas(item):
+            
+            fecha_entrada = datetime.strptime(item.get("fecha_entrada", ""), "%Y-%m-%d")
+            return fecha_inicial <= fecha_entrada <= fecha_final
+
+        reservaciones_filtradas = list(filter(filtro_rango_fechas, datos_globales))
+
+        # Utilizar mergesort para ordenar las reservaciones
+        sorted_data = mergesort(reservaciones_filtradas, ascendente)
+
+        # Si el orden actual es descendente, cambiar a ascendente y viceversa
+        # if ascendente!= orden_ascendente:
+        #     orden_ascendente = ascendente
+
+        # Actualizar el Treeview con los datos ordenados
+        actualizar_treeview(ventana5, sorted_data)
+
+    # ordenar_tabla(True)
+    def limpiar():
+        ordenar_ascendente_button.config(state=NORMAL)
+        ordenar_descendente_button.config(state=NORMAL)
+        tree_frame.destroy()
+        
+        
 
     
 
@@ -273,6 +322,7 @@ def mergesort(data_list, ascendente):
     return sorted_data
 
 def actualizar_treeview(ventana, data):
+    global tree_frame
     tree_frame = Frame(ventana)
     tree_frame.pack(pady=60)
 
