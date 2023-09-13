@@ -1,0 +1,5 @@
+nombre_cliente,fecha_reserva,fecha_entrada,fecha_salida,nro_habitacion,duracion_estadia,tipo_habitacion,preferencias_alimentarias,num_personas,contacto,precio_total,metodo_pago,notas_adicionales,estado_reservacion,id_reservacion
+Cliente 1,2023-09-12,2023-09-15,2023-09-18,101,3,Individual,Sin preferencias,1,correo1@example.com,300,Tarjeta,Notas adicionales 1,Confirmada,1
+Cliente 2,2023-09-13,2023-09-16,2023-09-19,102,3,Doble,Vegetariana,2,correo2@example.com,400,Efectivo,Notas adicionales 2,Pendiente,2
+Cliente 3,2023-09-14,2023-09-17,2023-09-20,103,3,Individual,Sin preferencias,1,correo3@example.com,350,Tarjeta,Notas adicionales 3,Confirmada,3
+Cliente 4,2023-09-15,2023-09-18,2023-09-21,104,3,Doble,Vegetariana,2,correo4@example.com,450,Efectivo,Notas adicionales 4,Pendiente,4
