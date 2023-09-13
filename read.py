@@ -11,4 +11,12 @@ def read_csv(path):
             data_list.append(dict_data) #Con los Dict asignados, creo una lista de diccionarios
 
     return data_list 
+
+def id_reservacion(data_list):
+    id = 1
+
+    for element in data_list:
+        element["Id"] = id
+        id+=1
+
     
